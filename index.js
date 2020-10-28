@@ -20,34 +20,73 @@ function initiate() {
         console.log("-> Online on Port " + PORT)
     })
 
-    app.post("/episode", (req, res) => {
-        console.log("new episode:")
-        saveEpisode(req.body)
+    app.post("/status", (req, res) => {
+        let count = 0
 
-        res.setHeader('Content-Type', 'application/json');
-        res.end("ok")
+        db("shows")
+        .then(rows => {
+            rows.forEach(row => {
+                count += 1
+            })
+
+            res.end(JSON.stringify({pointer: count}))
+        })
     })
 
     app.post("/show", (req, res) => {
-        console.log("new show:")
-        saveShow(req.body)
+        const show = req.body
+        console.log(show.title)
+        console.log("seasons: " + show.seasons.length)
 
-        res.setHeader('Content-Type', 'application/json');
-        res.end("ok")
+        db("shows")
+        .insert({title: show.title})
+        .catch(err => {
+            console.log(err);
+        })
+        seasonID = 0
+        for(season of show.seasons) {
+            seasonID += 1
+            db("seasons")
+            .insert({ID_show: show.id})
+            .catch(err => {
+                console.log(err)
+            })
+
+            console.log("episodes: " + season.episodes.length)
+
+            for(episode of season.episodes) {
+                db("episodes")
+                .insert({
+                    ID_show: show.id,
+                    ID_season: seasonID,
+                    title: episode.title,
+                    bs_link: episode.href,
+                    vivo_link: episode.vivo
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+
+            res.end("done")
+        }
     })
 }
 
 async function saveShow(show) {
     db("shows")
-        .insert(show)
+        .insert({ title: show.title })
         .catch(err => {
             console.log(err)
         })
+}
 
-    db("shows")
-        .then(rows => {
-            console.log(rows);
-        })
+async function saveSeason(showid) {
+    db("seasons")
+    .insert({ID_show: showid})
+    .catch(err => {
+        console.log(err);
+    })
 }
 
 async function saveEpisode(episode) {
