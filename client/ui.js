@@ -38,7 +38,7 @@ async function displayEpisodes() {
 
                 if (clicked.tagName != "TR") {
                     url = clicked.parentElement.childNodes[clicked.parentElement.childNodes.length - 1].innerHTML
-                    window.open(url)
+                    openPlayer(url)
                 }
             })
             table.appendChild(row)
@@ -49,6 +49,22 @@ async function displayEpisodes() {
         vie.get("#episodes").appendChild(container)
     })
 }
+
+async function openPlayer(url) {
+    const source = await getVideoSource(url)
+    console.log(source)
+
+    const video = vie.get("#videoPlayer")
+    video.innerHTML = ""
+
+    let sourceElement = document.createElement('source');
+    sourceElement.setAttribute('src', source);
+
+    video.appendChild(sourceElement)
+    video.load();
+    video.play();
+}
+
 
 function clearData() {
     key = vie.get("#passwordInput").value

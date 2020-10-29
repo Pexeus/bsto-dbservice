@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 28. Okt 2020 um 18:08
+-- Erstellungszeit: 29. Okt 2020 um 13:58
 -- Server-Version: 10.4.14-MariaDB
 -- PHP-Version: 7.4.9
 
@@ -44,7 +44,8 @@ CREATE TABLE `episodes` (
 
 CREATE TABLE `seasons` (
   `ID` int(11) NOT NULL,
-  `ID_show` int(11) NOT NULL
+  `ID_show` int(11) NOT NULL,
+  `ID_season` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -89,19 +90,19 @@ ALTER TABLE `shows`
 -- AUTO_INCREMENT für Tabelle `episodes`
 --
 ALTER TABLE `episodes`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=590;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `seasons`
 --
 ALTER TABLE `seasons`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `shows`
 --
 ALTER TABLE `shows`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

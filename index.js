@@ -1,7 +1,9 @@
 const fs = require("fs")
+
 const express = require("express")
 const bodyParser = require('body-parser')
-const knex = require("./dbConnection")
+const knex = require("./src/dbConnection")
+const scraper = require("./src/scraper")
 
 const db = knex.getDB()
 const app = express()
@@ -9,15 +11,24 @@ const server = require("http").Server(app)
 
 const PORT = 85
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("./client"))
 app.use(express.json({ limit: "1mb"}))
 
 function initiate() {
+    scraper.initiate()
+
     server.listen(process.env.PORT || PORT, () => {
         console.clear()
         console.log("-> Online on Port " + PORT)
+    })
+
+    app.post("/getSource", async (req, res) => {
+        const url = req.body.url
+
+        const source = await scraper.getSource(url)
+
+        res.end(JSON.stringify(source))
     })
 
     app.post("/getShows", (req, res) => {
@@ -93,32 +104,6 @@ function initiate() {
             res.end("done")
         }
     })
-}
-
-async function saveShow(show) {
-    db("shows")
-        .insert({ title: show.title })
-        .catch(err => {
-            console.log(err)
-        })
-}
-
-async function saveSeason(showid) {
-    db("seasons")
-    .insert({ID_show: showid})
-    .catch(err => {
-        console.log(err);
-    })
-}
-
-async function saveEpisode(episode) {
-    db("episodes")
-        .insert(episode)
-
-    db("episodes")
-        .then(rows => {
-            console.log(rows);
-        })
 }
 
 async function resetDB(key) {
