@@ -4,16 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Service online</h2>
+    <div id="sidebar">
 
-    <table>
-        <tr>
-            <tr>ID</tr>
-            <tr>title</tr>
-            <tr>description</tr>
-        </tr>
-    </table>
+        <button id="deleteButton" onclick="clearData()">Clear DB</button>
+        <input type="text" id="passwordInput" placeholder="password">
+        <br><br>
+        <div id="shows">
+            <table id="showsTable"></table>
+        </div>
+    </div>
+
+    <div id="episodes">
+        
+    </div>
+
+    <script src="./vie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+    <script src="./com.js"></script>
+    <script src="./ui.js"></script>
 </body>
 </html>
