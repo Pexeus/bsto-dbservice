@@ -20,3 +20,26 @@ async function clearDB(key) {
         location.reload()
     })
 }
+
+window.onload = () => {
+    axios.post("/getSession")
+    .then(resp => {
+        if(resp.data == false) {
+            window.location.href = "./login?error=accessdenied"
+        }
+    })
+}
+
+
+document.getElementById("logout").addEventListener("click", () => {
+    axios.post("/logout")
+    .then(resp => {
+        if(resp.data == "done") {
+            window.location.href = "./login"
+        }
+        else {
+            console.log(resp.data);
+        }
+        
+    })
+})
