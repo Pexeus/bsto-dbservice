@@ -20,11 +20,3 @@ async function clearDB(key) {
         location.reload()
     })
 }
-
-async function getVideoSource(url) {
-    return new Promise(resolve => {
-        axios.post("/getSource", {url: url}).then(response => {
-            resolve(response.data)
-        })
-    })
-}

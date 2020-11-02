@@ -3,23 +3,53 @@
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     transition: all ease-in-out .15s;
+    color: rgba(0, 0, 0, 0.651);
+    scrollbar-width: none;  
+}
+
+*::-webkit-scrollbar {
+    display: none;
 }
 
 #sidebar {
     height: 100%;
+    width: 280px;
     position: fixed;
     box-shadow: 0px 0px 4px rgb(66, 66, 66);
     top: 0;
     left: 0;
-    padding: 10px;
     background-color: white;
+    text-align: center;
+}
+
+#sidebar th {
+    background: #16697a;
+    color: white;
+    position: sticky;
+    top: 0; /* Don't forget this, required for the stickiness */
+}
+
+#shows {
+    height: calc(100% - 150px);
+    overflow: scroll;
+}
+
+#settings {
+    height: 150px;
+    text-align: left;
+    box-shadow: 0px -2px 3px gray;
 }
 
 table, th, td {
-    border-bottom: 1px solid rgb(202, 202, 202);
+    border-bottom: thin solid rgba(0,0,0,.12);
     border-collapse: collapse;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+th, td {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 th {
@@ -51,7 +81,6 @@ tr:hover {
 #seasonConainer h2 {
     color: #16697a;
     margin-bottom: 10px;
-    margin-top: 10pxs;
 }
 
 #episodes {
@@ -60,19 +89,27 @@ tr:hover {
     right: 0;
     padding: 5px;
     text-align: center;
-    padding-top: 20px;
 }
 
 #player {
     position: fixed;
-    width: 500px;
+    height: 360px;
+    width: 640px;
     text-align: center;
-    border-radius: 5px;
     bottom: 10px;
     right: 10px;
+    display: none;
+}
+
+#player iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 6px 8px rgb(77, 77, 77);
 }
 
 #player video {
     width: 100%;
     border-radius: 5px;
+    box-shadow: 0px 6px 8px rgb(77, 77, 77);
 }

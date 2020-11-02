@@ -1,4 +1,6 @@
 const fs = require("fs")
+const https = require("https");
+
 
 const express = require("express")
 const bodyParser = require('body-parser')
@@ -23,12 +25,14 @@ function initiate() {
         console.log("-> Online on Port " + PORT)
     })
 
-    app.post("/getSource", async (req, res) => {
-        const url = req.body.url
+    app.get("/stream/:vivoID", async (req, res) => {
+        const url = "https://vivo.sx/" + req.params.vivoID
 
         const source = await scraper.getSource(url)
-
-        res.end(JSON.stringify(source))
+        
+        https.get(source, response => {
+            response.pipe(res)
+        })
     })
 
     app.post("/getShows", (req, res) => {
@@ -69,26 +73,26 @@ function initiate() {
         })
     })
 
-    app.post("/show", (req, res) => {
+    app.post("/show", async (req, res) => {
         const show = req.body
         console.log(show.title)
         console.log("seasons: " + show.seasons.length)
 
-        db("shows")
-        .insert({title: show.title})
+        await db("shows").insert({title: show.title, description: "error: empty"})
         .catch(err => {
             console.log(err);
         })
         seasonID = 0
         for(season of show.seasons) {
             seasonID += 1
-            db("seasons")
-            .insert({ID_season: seasonID, ID_show: show.id})
+            
+            await db("seasons").insert({ID_season: seasonID, ID_show: show.id})
             .catch(err => {
                 console.log(err)
             })
+
             for(episode of season.episodes) {
-                db("episodes")
+                await db("episodes")
                 .insert({
                     ID_show: show.id,
                     ID_season: seasonID,
@@ -100,9 +104,9 @@ function initiate() {
                     console.log(err)
                 })
             }
-
-            res.end("done")
         }
+
+        res.end("done")
     })
 }
 

@@ -51,18 +51,45 @@ async function displayEpisodes() {
 }
 
 async function openPlayer(url) {
-    const source = await getVideoSource(url)
-    console.log(source)
+    const player = vie.get("#player")
+    const vivoID = url.split("https://vivo.sx/")[1]
 
-    const video = vie.get("#videoPlayer")
-    video.innerHTML = ""
+    player.style.display = "inline-block"
+    player.innerHTML = ""
 
-    let sourceElement = document.createElement('source');
-    sourceElement.setAttribute('src', source);
+    console.log(playerMethod())
 
-    video.appendChild(sourceElement)
-    video.load();
-    video.play();
+    if (playerMethod() == "stream") {
+        const video = vie.new("video")
+        video.setAttribute("controls", "")
+
+        const source = "/stream/" + vivoID
+    
+        const sourceElement = document.createElement('source');
+        sourceElement.setAttribute('src', source);
+
+        player.appendChild(video)
+        video.appendChild(sourceElement)
+        video.load();
+        video.play();
+    }
+
+    if (playerMethod() == "vivo") {
+        const iframe = vie.new("iframe")
+
+        iframe.src = "https://vivo.sx/embed/" + vivoID
+        iframe.sandbox = "allow-scripts allow-forms allow-same-origin"
+        iframe.scrolling = "no"
+        iframe.setAttribute("allowfullscreen", "")
+        iframe.setAttribute("frameborder", "0")
+
+        player.appendChild(iframe)
+    }
+}
+
+function playerMethod() {
+    const selection = vie.get("#playerMethod")
+    return selection.value.toLowerCase()
 }
 
 

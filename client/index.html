@@ -8,12 +8,19 @@
 </head>
 <body>
     <div id="sidebar">
-
-        <button id="deleteButton" onclick="clearData()">Clear DB</button>
-        <input type="text" id="passwordInput" placeholder="password">
-        <br><br>
         <div id="shows">
             <table id="showsTable"></table>
+        </div>
+
+        <div id="settings">
+            <label for="playerMethod">Player Mode:</label>
+            <select name="playerMethod" id="playerMethod">
+                <option value="Vivo">Vivo</option>
+                <option value="stream">Stream</option>
+            </select>
+            <br>
+            <button id="deleteButton" onclick="clearData()">Clear DB</button>
+            <input type="text" id="passwordInput" placeholder="password">
         </div>
     </div>
 

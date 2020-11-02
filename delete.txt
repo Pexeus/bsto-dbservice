@@ -1,3 +1,0 @@
-DELETE FROM shows;
-DELETE FROM seasons;
-DELETE FROM episodes;
